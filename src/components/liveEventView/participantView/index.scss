@@ -1,0 +1,138 @@
+@import '../../../styles/variables';
+
+.participant-view {
+  display: flex;
+  flex-grow: 1;
+
+  .participant-view__main {
+    width: 100%;
+    background-color: var(--sendbird-light-background-100);
+
+    .toast-container {
+      position: absolute;
+      top: 10px;
+      z-index: 5000;
+
+      .toast {
+        width: 500px;
+        margin: auto;
+        padding: 10px 0 10px 0;
+        background-color: var(--sendbird-dark-information-100);
+        font-size: 12px;
+        font-weight: bold;
+        line-height: 1;
+        text-align: center;
+        color: rgba(0, 0, 0, 0.88);
+      }
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: calc(100%);
+
+      &:before {
+        display: block;
+        content: "";
+        padding-top: 56.25%;  /*What you want the height to be in relation to the width*/
+      }
+
+      .participant-view__video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .participant-view__info {
+      display: flex;
+      padding-top: 16px;
+      background-color: var(--sendbird-light-background-50);
+
+      .participant-view__profile {
+        width: 56px;
+        height: 56px;
+        margin: 0 16px 12px;
+        border-radius: 50%;
+        background-color: var(--sendbird-dark-background-300);
+        overflow: hidden;
+
+        .participant-view__profile__cover-image {
+          width: 56px;
+          height: 56px;
+          object-fit: contain;
+        }
+      }
+
+      .participant-view__info__wrapper {
+
+        .event-state {
+          width: fit-content;
+          box-sizing: border-box;
+          height: 20px;
+          margin-right: 8px;
+          padding: 4px;
+          border-radius: 2px;
+          font-size: 12px;
+          font-weight: bold;
+          line-height: 1;
+
+          &--created {
+            @extend .event-state;
+            background-color: var(--sendbird-light-primary-100);
+            color: #6211c8;
+          }
+
+          &--ready {
+            @extend .event-state;
+            background-color: #c8d9fa;
+            color: #30308f;
+          }
+
+          &--ongoing {
+            @extend .event-state;
+            background-color: var(--sendbird-light-error-300);
+            color: rgba(255, 255, 255, 0.88);
+          }
+
+          &--ended {
+            @extend .event-state;
+            @include themed() {
+              background-color: t(bg-2);
+            }
+            color: rgba(0, 0, 0, 0.5);
+          }
+        }
+
+        .participant-view__title__wrapper {
+          display: flex;
+          align-items: center;
+
+          .participant-view__title {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: rgba(0, 0, 0, 0.88);
+          }
+        }
+
+        .participant-view__detail {
+          margin-top: 4px;
+          font-size: 14px;
+          line-height: 1.43;
+          color: rgba(0, 0, 0, 0.5);
+        }
+
+        .participant-view__host-name {
+          margin-top: 16px;
+          margin-bottom: 16px;
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 1.43;
+          color: rgba(0, 0, 0, 0.88);
+        }
+      }
+    }
+  }
+}
