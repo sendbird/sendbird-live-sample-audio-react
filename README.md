@@ -1,4 +1,4 @@
-# [Sendbird Live](https://sendbird.com/docs/live) Audio Sample for iOS
+# [Sendbird Live](https://sendbird.com/docs/live) Audio Sample for React
 
 [![Platform](https://img.shields.io/badge/Framework-React-orange.svg)](https://github.com/sendbird/sendbird-live-sample-audio-react)
 [![Language](https://img.shields.io/badge/Language-TypeScript-orange.svg)](https://github.com/sendbird/sendbird-live-sample-audio-react)
