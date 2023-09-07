@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/sendbird-live-sample-audio-react/static/css/main.2ed2b373.css",
-    "main.js": "/sendbird-live-sample-audio-react/static/js/main.0158b2b7.js",
+    "main.js": "/sendbird-live-sample-audio-react/static/js/main.d3c12ae9.js",
     "static/js/539.db044614.chunk.js": "/sendbird-live-sample-audio-react/static/js/539.db044614.chunk.js",
     "static/js/932.39c805f4.chunk.js": "/sendbird-live-sample-audio-react/static/js/932.39c805f4.chunk.js",
     "static/js/68.558ed2d2.chunk.js": "/sendbird-live-sample-audio-react/static/js/68.558ed2d2.chunk.js",
@@ -26,7 +26,7 @@
     "static/media/icons-spinner.svg": "/sendbird-live-sample-audio-react/static/media/icons-spinner.a87972b44c61ca05fa996faeb243d0bc.svg",
     "static/media/icons-chevron-right.svg": "/sendbird-live-sample-audio-react/static/media/icons-chevron-right.d93dfdba0bbf295eacacef4ee887eac6.svg",
     "main.2ed2b373.css.map": "/sendbird-live-sample-audio-react/static/css/main.2ed2b373.css.map",
-    "main.0158b2b7.js.map": "/sendbird-live-sample-audio-react/static/js/main.0158b2b7.js.map",
+    "main.d3c12ae9.js.map": "/sendbird-live-sample-audio-react/static/js/main.d3c12ae9.js.map",
     "539.db044614.chunk.js.map": "/sendbird-live-sample-audio-react/static/js/539.db044614.chunk.js.map",
     "932.39c805f4.chunk.js.map": "/sendbird-live-sample-audio-react/static/js/932.39c805f4.chunk.js.map",
     "68.558ed2d2.chunk.js.map": "/sendbird-live-sample-audio-react/static/js/68.558ed2d2.chunk.js.map",
@@ -34,6 +34,6 @@
   },
   "entrypoints": [
     "static/css/main.2ed2b373.css",
-    "static/js/main.0158b2b7.js"
+    "static/js/main.d3c12ae9.js"
   ]
 }
