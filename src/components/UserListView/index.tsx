@@ -2,7 +2,7 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { UserProfile } from 'src/types';
 
-import CloseIcon from '../../assets/svg/icons-close.svg';
+import { ReactComponent as CloseIcon } from '../../assets/svg/icons-close.svg';
 
 import './index.scss';
 import UserView from './userView';

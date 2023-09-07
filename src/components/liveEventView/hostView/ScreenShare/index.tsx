@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { LiveEvent } from "@sendbird/live";
-import CloseIcon from "../../../../assets/svg/icons-close.svg";
-import BottomRightIcon from "../../../../assets/svg/icons-screen-share-bottom-right.svg";
-import BottomLeftIcon from "../../../../assets/svg/icons-screen-share-bottom-left.svg";
-import TopRightIcon from "../../../../assets/svg/icons-screen-share-top-right.svg";
-import TopLeftIcon from "../../../../assets/svg/icons-screen-share-top-left.svg";
-import HiddenIcon from "../../../../assets/svg/icons-screen-share-hidden.svg";
+import { ReactComponent as CloseIcon } from "../../../../assets/svg/icons-close.svg";
+import { ReactComponent as BottomRightIcon } from "../../../../assets/svg/icons-screen-share-bottom-right.svg";
+import { ReactComponent as BottomLeftIcon } from "../../../../assets/svg/icons-screen-share-bottom-left.svg";
+import { ReactComponent as TopRightIcon } from "../../../../assets/svg/icons-screen-share-top-right.svg";
+import { ReactComponent as TopLeftIcon } from "../../../../assets/svg/icons-screen-share-top-left.svg";
+import { ReactComponent as HiddenIcon } from "../../../../assets/svg/icons-screen-share-hidden.svg";
 
 import './index.scss';
 

@@ -3,8 +3,9 @@ import LiveEventElem from "./liveEventElem";
 import { LiveEvent, LiveEventListQuery, LiveEventListQueryParams, SendbirdLive } from "@sendbird/live";
 
 import './index.scss';
-import IconRefresh from '../../assets/svg/icons-refresh.svg';
+import { ReactComponent as IconRefresh } from '../../assets/svg/icons-refresh.svg';
 import { SendbirdLiveContext } from "../../lib/sendbirdLiveContext";
+import UserProfile from "./UserProfile";
 
 interface RenderLiveEventElemProps {
   liveEvent: LiveEvent;
@@ -34,9 +35,9 @@ export default function LiveEventList(props: LiveEventListProps) {
     showHostNickname = true,
   } = props;
 
-  const { stringSet } = useContext(SendbirdLiveContext);
+  const { stringSet, userId, nickname } = useContext(SendbirdLiveContext);
 
-  const params = queryParams || { limit: 20 };
+  const params = queryParams || { limit: 20, hostTypes: [] };
   const [query, setQuery] = useState<LiveEventListQuery>(SendbirdLive.createLiveEventListQuery(params));
 
   const liveEventList = useRef<HTMLDivElement>(null);
@@ -110,6 +111,7 @@ export default function LiveEventList(props: LiveEventListProps) {
           )
         }
       </div>
+      <UserProfile userId={userId} nickname={nickname} />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { LiveEvent, LiveEventState, SendbirdLive } from "@sendbird/live";
+import { HostType, LiveEvent, LiveEventState, SendbirdLive } from "@sendbird/live";
 import React, { useState } from "react";
 import useModal from "../..//hooks/useModal";
 import SendbirdLiveProvider from "../../lib/sendbirdLive";
@@ -10,12 +10,14 @@ import './index.scss';
 import ParticipantView from "../liveEventView/participantView";
 import EnterView from "../liveEventList/EnterView";
 import EnterErrorView from "./EnterErrorView";
+import emptyState from '../../assets/png/img-live-emptystate.png';
 
 interface AppProps {
   userId: string;
   appId: string;
   nickname?: string;
   accessToken?: string;
+  signOut: () => void;
   customApiHost?: string;
   customWebSocketHost?: string;
   theme?: Record<string, string>;
@@ -33,6 +35,7 @@ export default function App(props: AppProps) {
     appId,
     nickname,
     accessToken,
+    signOut,
     customApiHost,
     customWebSocketHost,
     theme,
@@ -48,11 +51,21 @@ export default function App(props: AppProps) {
   const [EnterModal, openEnterModal, closeEnterModal] = useModal('');
   const [EnterErrorModal, openEnterErrorModal, closeEnterErrorModal] = useModal('');
 
+  const onClickCreate = async () => {
+    const liveEvent = await SendbirdLive.createLiveEvent({
+      userIdsForHost: [userId],
+      title: `${userId}'s audio live`,
+      hostType: HostType.SINGLE_HOST_AUDIO_ONLY,
+    });
+    await liveEvent.enterAsHost({turnAudioOn: true, turnVideoOn: true});
+    await liveEvent.setEventReady();
+    setIsHost(true);
+    setLiveEvent(liveEvent);
+  }
+
   const liveEventListProps = {
     ...customize?.liveEventList,
-    onClickCreate: () => {
-      openCreateEventModal();
-    },
+    onClickCreate,
     onClickElem: async (liveEvent: LiveEvent) => {
       try {
         const event = await SendbirdLive.getLiveEvent(liveEvent.liveEventId);
@@ -86,9 +99,10 @@ export default function App(props: AppProps) {
   const LiveEventView = ({ onClose }: { onClose: (liveEvent?: LiveEvent) => void }) => {
     if (!liveEvent) return (
       <div className="sendbirdlive-app__no-event">
+        <img src={emptyState} className="sendbirdlive-app__no-event-img"/>
         <div className="sendbirdlive-app__no-event__title">No live events selected</div>
         <div className="sendbirdlive-app__no-event__description">Select a live event from the list or create a live event.</div>
-        <div className="sendbirdlive-app__no-event__button" onClick={openCreateEventModal}>Create</div>
+        <div className="sendbirdlive-app__no-event__button" onClick={onClickCreate}>Go Live</div>
       </div>
     );
 
@@ -105,6 +119,7 @@ export default function App(props: AppProps) {
       appId={appId}
       nickname={nickname}
       accessToken={accessToken}
+      signOut={signOut}
       customApiHost={customApiHost}
       customWebSocketHost={customWebSocketHost}
       theme={theme}

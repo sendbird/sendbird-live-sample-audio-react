@@ -14,14 +14,12 @@
     background-color: var(--sendbird-dark-background-700);
 
     .video-wrapper {
+      display: flex;
       position: relative;
       width: calc(100%);
-
-      &:before {
-        display: block;
-        content: "";
-        padding-top: 56.25%;  /*What you want the height to be in relation to the width*/
-      }
+      aspect-ratio: 3/2;
+      align-items: center;
+      justify-content: center;
 
       .host-view__video {
         position: absolute;
@@ -30,6 +28,17 @@
         width: 100%;
         height: 100%;
       }
+
+      .host-view__video__cover-image {
+        width: 160px;
+        height: 160px;
+        object-fit: contain;
+      }
+    }
+
+    .video-wrapper-active {
+      background-image: url("../../../assets/png/BG.png");
+      background-size: cover;
     }
 
     .host-view__info {

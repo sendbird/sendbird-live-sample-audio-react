@@ -8,6 +8,7 @@ interface SendbirdLiveInternalProps {
   userId: string;
   appId: string;
   accessToken?: string;
+  signOut: () => void;
   customApiHost?: string;
   customWebSocketHost?: string;
   children?: React.ReactNode;
@@ -23,6 +24,7 @@ export default function SendbirdLiveInternal(props: SendbirdLiveInternalProps) {
     userId,
     appId,
     accessToken,
+    signOut,
     customApiHost,
     customWebSocketHost,
     children,
@@ -65,11 +67,13 @@ export default function SendbirdLiveInternal(props: SendbirdLiveInternalProps) {
       userId,
       appId,
       accessToken,
+      signOut,
       customApiHost,
       customWebSocketHost,
       children,
       theme,
       colorSet,
+      // @ts-ignore
       stringSet,
       imageSet,
       fontSet,

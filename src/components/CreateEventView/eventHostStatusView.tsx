@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import InfoIcon from '../../assets/svg/icons-info.svg';
+import { ReactComponent as InfoIcon } from '../../assets/svg/icons-info.svg';
 
 interface Props {
   message: string;

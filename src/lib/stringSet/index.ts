@@ -1,7 +1,7 @@
 export const getStringSet = () => {
   return {
     LIST_HEADER_TITLE: 'Live events',
-    LIST_HEADER_BUTTON: 'Create',
+    LIST_HEADER_BUTTON: 'Go Live',
     LIST_EMPTY_DESCRIPTION: 'No live events',
     NO_LIVE_EVENT_TITLE: 'No live events selected',
     NO_LIVE_EVENT_DESCRIPTION: 'Select a live event from the list or create a live event',
@@ -19,7 +19,7 @@ export const getStringSet = () => {
     LIVE_EVENT_CREATE_HEADER_TITLE: 'New live event',
     LIVE_EVENT_CREATE_EVENT_TITLE: 'Title',
     LIVE_EVENT_CREATE_EVENT_TITLE_PLACEHOLDER: 'Add a title',
-    CREATE_EVENT_DEFAULT_TITLE: 'Live event',
+    CREATE_EVENT_DEFAULT_TITLE: `'s audio live`,
     LIVE_EVENT_CREATE_EVENT_USERS_FOR_HOST: 'Users who can be host',
     LIVE_EVENT_CREATE_EVENT_COVER_IMAGE_TITLE: 'Cover image',
     LIVE_EVENT_CREATE_EVENT_COVER_IMAGE_BUTTON: 'Upload photo',

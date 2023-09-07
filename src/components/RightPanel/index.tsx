@@ -29,6 +29,7 @@ export default function RightPanel({
   const context = useSendbirdStateContext();
   const sb = sendbirdSelectors.getSdk(context);
 
+  const [isOpen, setOpen] = useState(true);
   const [viewStack, setViewStack] = useState([...initialViewStack]);
   const [currentView, setCurrentView] = useState(initialViewStack[initialViewStack.length - 1]);
   const pushViewStack = (componentType: RightPanelComponentType) => {
@@ -49,56 +50,62 @@ export default function RightPanel({
     setCurrentView(viewStack[viewStack.length - 1]);
   }, [viewStack]);
 
-  return <div className='sendbirdlive-right__wrapper'>
-    {currentView === RightPanelComponentType.CHAT ?
-      <OpenChannel
-        channelUrl={liveEvent.liveEventId}
-        useMessageGrouping={true}
-        onChatHeaderActionClick={() => {
-          if (liveEvent.host?.userId === sb?.currentUser.userId) {
-            pushViewStack(RightPanelComponentType.EVENT_INFO);
-          } else {
-            pushViewStack(RightPanelComponentType.PARTICIPANT_LIST);
-          }
-        }}
-        /> :
-      null}
-    {currentView === RightPanelComponentType.EVENT_INFO ?
-      <EventDetailView
-        liveEvent={liveEvent}
-        onHostsClick={() => pushViewStack(RightPanelComponentType.HOST_LIST)}
-        onParticipantsClick={() => pushViewStack(RightPanelComponentType.PARTICIPANT_LIST)}
-        onClose={() => popViewStack()}
-        /> :
-      null}
-    {currentView === RightPanelComponentType.HOST_LIST ?
-      <UserListView
-        title={'Hosts'}
-        count={openChannel.operators.length}
-        query={async () => {
-          return {
-            result: openChannel.operators,
-            hasNext: false,
-          };
-        }}
-        onClose={() => popViewStack()}
-        /> :
-      null}
-    {currentView === RightPanelComponentType.PARTICIPANT_LIST ?
-      <UserListView
-        title={'Participants'}
-        count={openChannel.participantCount}
-        query={async () => {
-          const participantListQuery = openChannel.createParticipantListQuery({});
-          const participants = participantListQuery ? await participantListQuery.next() : [];
-          const hasNext = participantListQuery?.hasNext;
-          return {
-            result: participants,
-            hasNext,
-          };
-        }}
-        onClose={() => popViewStack()}
-        /> :
-      null}
-  </div>;
+  return (
+    isOpen ?
+      <div className='sendbirdlive-right__wrapper'>
+        {currentView === RightPanelComponentType.CHAT ?
+          <OpenChannel
+            channelUrl={liveEvent.liveEventId}
+            useMessageGrouping={true}
+            onChatHeaderActionClick={() => {
+              if (liveEvent.host?.userId === sb?.currentUser?.userId) {
+                pushViewStack(RightPanelComponentType.EVENT_INFO);
+              } else {
+                pushViewStack(RightPanelComponentType.PARTICIPANT_LIST);
+              }
+            }}
+          /> :
+          null}
+        {currentView === RightPanelComponentType.EVENT_INFO ?
+          <EventDetailView
+            liveEvent={liveEvent}
+            onHostsClick={() => pushViewStack(RightPanelComponentType.HOST_LIST)}
+            onParticipantsClick={() => pushViewStack(RightPanelComponentType.PARTICIPANT_LIST)}
+            onClose={() => popViewStack()}
+          /> :
+          null}
+        {currentView === RightPanelComponentType.HOST_LIST ?
+          <UserListView
+            title={'Hosts'}
+            count={openChannel.operators.length}
+            query={async () => {
+              return {
+                result: openChannel.operators,
+                hasNext: false,
+              };
+            }}
+            onClose={() => popViewStack()}
+          /> :
+          null}
+        {currentView === RightPanelComponentType.PARTICIPANT_LIST ?
+          <UserListView
+            title={'Participants'}
+            count={openChannel.participantCount}
+            query={async () => {
+              const participantListQuery = openChannel.createParticipantListQuery({});
+              const participants = participantListQuery ? await participantListQuery.next() : [];
+              const hasNext = participantListQuery?.hasNext;
+              return {
+                result: participants,
+                hasNext,
+              };
+            }}
+            onClose={() => popViewStack()}
+          /> :
+          null}
+      </div>
+      :
+      <div>
+      </div>
+  );
 }

@@ -2,8 +2,8 @@
 import React, { ReactElement } from 'react';
 
 import './index.scss';
-import UserIcon from '../../assets/svg/icons-user.svg';
-import CloseIcon from '../../assets/svg/icons-close.svg';
+import { ReactComponent as UserIcon } from '../../assets/svg/icons-user.svg';
+import { ReactComponent as CloseIcon } from '../../assets/svg/icons-close.svg';
 
 export interface EventHostViewProps {
   key: string;

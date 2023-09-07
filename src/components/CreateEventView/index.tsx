@@ -1,4 +1,3 @@
-
 import React, { ReactElement, useContext, useEffect, useRef, useState } from 'react';
 import { sendbirdSelectors, useSendbirdStateContext } from '@sendbird/uikit-react';
 import { v4 as uuid } from 'uuid';
@@ -7,12 +6,12 @@ import EventHostSearchInput from './eventHostSearchInput';
 import EventHostTextInput from './eventHostTextInput';
 import EventHostView, { EventHostViewProps } from './eventHostView';
 
-import LiveIcon from '../../assets/svg/icons-live.svg';
-import CloseIcon from '../../assets/svg/icons-close.svg';
+import { ReactComponent as LiveIcon } from '../../assets/svg/icons-live.svg';
+import { ReactComponent as CloseIcon } from '../../assets/svg/icons-close.svg';
 
 import './index.scss';
 import { UserProfile } from 'src/types';
-import { LiveEvent, SendbirdLive } from "@sendbird/live";
+import { HostType, LiveEvent, SendbirdLive } from "@sendbird/live";
 import { SendbirdLiveContext } from "../../lib/sendbirdLiveContext";
 
 export interface CreateEventViewProps {
@@ -122,6 +121,7 @@ export default function CreateEventView({
           userIdsForHost: [ ...hostUserIds ],
           title: title,
           coverFile: newFile ?? undefined,
+          hostType: HostType.SINGLE_HOST_AUDIO_ONLY,
         });
         await liveEvent.enterAsHost({turnAudioOn: true, turnVideoOn: true});
         onClose(liveEvent);
