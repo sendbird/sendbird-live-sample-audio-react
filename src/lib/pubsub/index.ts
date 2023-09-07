@@ -14,10 +14,12 @@ export default class PubSub {
   subscribe<K extends keyof TOPICS>(topic: K, listener: Listener<TOPICS[K]>) {
     if (!this._topics[topic]) this._topics[topic] = [];
 
+    // @ts-ignore
     const index = this._topics[topic].push(listener) - 1;
 
     return {
       remove: () => {
+        // @ts-ignore
         delete this._topics[topic][index];
       }
     };
@@ -28,6 +30,7 @@ export default class PubSub {
     if (!this._topics[topic]) return;
 
     // Cycle through topics queue, fire!
+    // @ts-ignore
     this._topics[topic].forEach((handler: Listener<TOPICS[K]>) => {
       handler(...info);
     });

@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 
 import './index.scss';
 
-import UserIcon from '../../assets/svg/icons-user.svg';
+import { ReactComponent as UserIcon } from '../../assets/svg/icons-user.svg';
 
 interface Props {
   key: string;

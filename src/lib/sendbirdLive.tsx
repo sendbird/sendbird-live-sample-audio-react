@@ -9,6 +9,7 @@ interface sendbirdLiveProps {
   appId: string;
   nickname?: string;
   accessToken?: string;
+  signOut: () => void;
   customApiHost?: string;
   customWebSocketHost?: string;
   children?: React.ReactNode;
@@ -23,6 +24,7 @@ export default function SendbirdLive(props: sendbirdLiveProps) {
     appId,
     nickname,
     accessToken,
+    signOut,
     customApiHost,
     customWebSocketHost,
     children,

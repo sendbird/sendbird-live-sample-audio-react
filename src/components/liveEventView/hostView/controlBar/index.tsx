@@ -1,18 +1,11 @@
 import { LiveEvent, LiveEventState } from "@sendbird/live";
 import React, { useContext, useEffect, useState } from "react";
-import SettingsIcon from '../../../../assets/svg/icons-settings-filled.svg';
-import CameraIcon from '../../../../assets/svg/icons-camera-filled.svg';
-import CameraOffIcon from '../../../../assets/svg/icons-camera-off-filled.svg'
-import MicIcon from '../../../../assets/svg/icons-mic-filled.svg';
-import MicOffIcon from '../../../../assets/svg/icons-mic-off-filled.svg';
-import ScreenShareIcon from '../../../../assets/svg/icons-screen-share-filled.svg';
-import LayoutIcon from '../../../../assets/svg/icons-layout-filled.svg';
+import { ReactComponent as SettingsIcon } from '../../../../assets/svg/icons-settings-filled.svg';
+import { ReactComponent as MicIcon } from '../../../../assets/svg/icons-mic-filled.svg';
+import { ReactComponent as MicOffIcon } from '../../../../assets/svg/icons-mic-off-filled.svg';
 
 import './index.scss';
-import useModal from "../../../../hooks/useModal";
-import Settings from "../Settings";
 import { SendbirdLiveContext } from "../../../../lib/sendbirdLiveContext";
-import ScreenShare from "../ScreenShare";
 import Duration from "./Duration";
 
 interface ControlBarProps {
@@ -32,22 +25,13 @@ export default function ControlBar(props: ControlBarProps) {
 
   const [ongoing, setOngoing] = useState(liveEvent.state === LiveEventState.ONGOING);
   const [audio, setAudio] = useState(true);
-  const [video, setVideo] = useState(true);
-  const [isScreenSharing, setIsScreenSharing] = useState(false);
-  const [SettingsModal, openSettingsModal, closeSettingsModal] = useModal('');
-  const [ScreenShareModal, openScreenShareModal, closeScreenShareModal] = useModal('', 'dark-background__screen-share');
 
   const { stringSet } = useContext(SendbirdLiveContext);
 
   const startLiveEvent = async () => {
-    await liveEvent.startEvent({ turnAudioOn: true, turnVideoOn: true });
+    await liveEvent.startEvent({ turnAudioOn: true, turnVideoOn: false });
     setOngoing(true);
     onStart(liveEvent);
-  }
-
-  const toggleVideo = (on: boolean) => {
-    on ? liveEvent.startVideo() : liveEvent.stopVideo();
-    setVideo(on);
   }
 
   const toggleAudio = (on: boolean) => {
@@ -55,28 +39,11 @@ export default function ControlBar(props: ControlBarProps) {
     setAudio(on);
   }
 
-  const startScreenSharing = async () => {
-    await liveEvent.startScreenShare();
-    setIsScreenSharing(true);
-  }
-
-  const stopScreenSharing = () => {
-    liveEvent.stopScreenShare();
-    setIsScreenSharing(false);
-  }
-
   return (
     <div className="control-bar">
       <div className="control-bar__left-buttons">
         <div className="control-bar__settings">
           <SettingsIcon viewBox="0 0 64 64" width={22} height={22} fill="#ccc" onClick={() => onSettings(liveEvent)}/>
-        </div>
-        <div className="control-bar__video">
-          {
-            video
-              ? <CameraIcon viewBox="0 0 64 64" width={22} height={22} fill="#ccc" onClick={() => toggleVideo(false) }/>
-              : <CameraOffIcon viewBox="0 0 64 64" width={22} height={22} fill="#ccc" onClick={() => toggleVideo(true) }/>
-          }
         </div>
         <div className="control-bar__audio__wrapper">
           <div className="control-bar__audio">
@@ -87,13 +54,6 @@ export default function ControlBar(props: ControlBarProps) {
             }
           </div>
           <div className="control-bar__volume" />
-        </div>
-        <div className="control-bar__screen-share">
-          <ScreenShareIcon width={22} height={22} fill="#ccc" onClick={() => startScreenSharing()}/>
-          <LayoutIcon width={22} height={22} fill="#ccc" onClick={() => openScreenShareModal()}/>
-          {
-            isScreenSharing && <div className="control-bar__screen-share__stop" onClick={() => stopScreenSharing()}>Stop ScreenShare</div>
-          }
         </div>
       </div>
       <div className="control-bar__right-buttons">
@@ -109,11 +69,6 @@ export default function ControlBar(props: ControlBarProps) {
             : <div className="control-bar__start-live" onClick={startLiveEvent}>{stringSet.START_LIVE_EVENT_HEADER_BUTTON}</div>
         }
       </div>
-      <ScreenShareModal>
-        <ScreenShare liveEvent={liveEvent} onClose={() => {
-          closeScreenShareModal();
-        }}/>
-      </ScreenShareModal>
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import CloseIcon from "../../../assets/svg/icons-close.svg";
-import OperatorIcon from '../../../assets/svg/icons-operator.svg';
-import MembersIcon from '../../../assets/svg/icons-members.svg';
+import { ReactComponent as CloseIcon } from "../../../assets/svg/icons-close.svg";
+import { ReactComponent as OperatorIcon } from '../../../assets/svg/icons-operator.svg';
+import { ReactComponent as MembersIcon } from '../../../assets/svg/icons-members.svg';
 import React, { useContext } from "react";
 import { LiveEvent, SendbirdLive } from "@sendbird/live";
 

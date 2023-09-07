@@ -5,7 +5,7 @@ import { sendbirdSelectors, useSendbirdStateContext } from '@sendbird/uikit-reac
 import EventHostView, { EventHostViewProps } from './eventHostView';
 import EventHostStatusView from './eventHostStatusView';
 
-import IconSpinner from '../../assets/svg/icons-spinner.svg';
+import { ReactComponent as IconSpinner } from '../../assets/svg/icons-spinner.svg';
 
 import './index.scss';
 import { DEFAULT_MAX_HOST_LENGTH } from '.';

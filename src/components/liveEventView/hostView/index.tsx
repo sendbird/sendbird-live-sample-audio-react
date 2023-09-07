@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { LiveEvent, LiveEventState } from "@sendbird/live";
 
 import './index.scss';
-import IconUser from "../../../assets/svg/icons-user.svg";
+import { ReactComponent as IconUser } from "../../../assets/svg/icons-user.svg";
 import ControlBar from './controlBar';
 import useModal from "../../../hooks/useModal";
 import ConfirmEndDialog from "../../ConfirmEndDialog";
@@ -12,32 +12,14 @@ import Settings from "./Settings";
 
 const isSafari = () => /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-interface OnEndEventClickedProps {
-  onClick: () => void;
-}
-
 interface HostViewProps {
   liveEvent: LiveEvent;
   onClose: (liveEvent?: LiveEvent) => void;
-  showDuration?: boolean;
-  onEndEventClick?: (props: OnEndEventClickedProps) => void;
-  showStatusLabel?: boolean;
-  showParticipantCount?: boolean;
-  eventEndViewDisplayTime?: number;
-  allowExitWithoutEnding?: boolean;
-  showEventSummaryView?: boolean;
 }
 
 export default function HostView(props: HostViewProps) {
   const {
     liveEvent,
-    showDuration,
-    onEndEventClick,
-    showStatusLabel,
-    showParticipantCount,
-    eventEndViewDisplayTime,
-    allowExitWithoutEnding,
-    showEventSummaryView,
     onClose,
   } = props;
 
@@ -81,11 +63,8 @@ export default function HostView(props: HostViewProps) {
 
   useEffect(() => {
     const unsubscribers = [
-      liveEvent.on('participantEntered', (event, participant) => {
-        setParticipantCount(liveEvent.participantCount);
-      }),
-      liveEvent.on('participantExited', (...args) => {
-        setParticipantCount(liveEvent.participantCount);
+      liveEvent.on('participantCountChanged', (liveEvent, participantCountInfo) => {
+        setParticipantCount(participantCountInfo.participantCount);
       }),
       liveEvent.on('liveEventUpdated', () => {
         setTitle(liveEvent.title);
@@ -114,8 +93,12 @@ export default function HostView(props: HostViewProps) {
   return (
     <div className="host-view">
       <div className="host-view__main">
-        <div className="video-wrapper">
-          <video className="host-view__video" ref={video} playsInline autoPlay muted controls={isSafari()}/>
+        <div className={`video-wrapper ${liveEvent.state === LiveEventState.ONGOING ? 'video-wrapper-active' : ''}`}>
+          {
+            (liveEvent.coverUrl) ?
+              <img src={coverUrl} alt='cover image' className='host-view__video__cover-image' /> :
+              <IconUser viewBox='-4 -4 20 20' width={160} height={160} />
+          }
         </div>
         <div className="host-view__info">
           <div className="host-view__profile">
@@ -128,7 +111,7 @@ export default function HostView(props: HostViewProps) {
           <div className="host-view__info__wrapper">
             <div className="host-view__title__wrapper">
               <div className={`event-state--${state}`}>{mapStateName(state)}</div>
-              <div className="host-view__title">{title ? title : stringSet.CREATE_EVENT_DEFAULT_TITLE}</div>
+              <div className="host-view__title">{title ? title : liveEvent.createdBy + stringSet.CREATE_EVENT_DEFAULT_TITLE}</div>
             </div>
             <div className="host-view__detail">{participantCount ?? 0} watching now { state === LiveEventState.ONGOING ? `∙ Started ${getMM(liveEvent.duration)} mins ago` : '' }</div>
             <div className="host-view__host-name">{liveEvent.host ? liveEvent.host.nickname : 'No Host'}</div>
@@ -138,7 +121,7 @@ export default function HostView(props: HostViewProps) {
           liveEvent={liveEvent}
           onStart={(liveEvent) => {
             liveEvent.setVideoViewForLiveEvent(video.current!, liveEvent.host.hostId);
-            setState(state);
+            setState(liveEvent.state);
           }}
           onEnd={() => {
             openEndModal();

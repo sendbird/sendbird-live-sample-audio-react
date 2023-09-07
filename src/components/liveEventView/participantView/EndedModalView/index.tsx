@@ -1,7 +1,7 @@
 import React from "react";
 
 import './index.scss';
-import CloseIcon from "../../../../assets/svg/icons-close.svg";
+import { ReactComponent as CloseIcon } from "../../../../assets/svg/icons-close.svg";
 
 interface EndedModalViewProps {
   onClose: () => void;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LiveEvent, SendbirdLive } from "@sendbird/live";
-import CloseIcon from "../../../../assets/svg/icons-close.svg";
+import { ReactComponent as CloseIcon } from "../../../../assets/svg/icons-close.svg";
 
 import './index.scss';
 
@@ -15,25 +15,26 @@ export default function Settings(props: SettingsProps) {
     onClose
   } = props;
 
+  const [currentAudioInput, setCurrentAudioInput] = useState<InputDeviceInfo>();
   const [audioInputs, setAudioInputs] = useState<InputDeviceInfo[]>([]);
-  const [videoInputs, setVideoInputs] = useState<InputDeviceInfo[]>([]);
+
+  const mediaAccess = SendbirdLive.useMedia({ audio: true, video: false });
 
   useEffect(() => {
-    const mediaAccess = SendbirdLive.useMedia({ audio: true, video: true });
 
     setAudioInputs(SendbirdLive.getAvailableAudioInputDevices());
-    setVideoInputs(SendbirdLive.getAvailableVideoInputDevices());
+
+    setCurrentAudioInput(SendbirdLive.getCurrentAudioInputDevice());
 
     SendbirdLive.setAudioInputDeviceChanged((current, available) => {
       console.log('audio input updated', available);
       setAudioInputs(available);
-    });
-    SendbirdLive.setVideoInputDeviceChanged((current, available) => {
-      console.log('video input updated', available);
-      setVideoInputs(available);
+      if (current.deviceId !== currentAudioInput?.deviceId) {
+        setCurrentAudioInput(current);
+      }
     });
 
-    SendbirdLive.updateMediaDevices({ audio: true, video: true });
+    SendbirdLive.updateMediaDevices({ audio: true, video: false });
 
     return () => {
       if (mediaAccess) mediaAccess.dispose();
@@ -47,31 +48,16 @@ export default function Settings(props: SettingsProps) {
       </div>
       <div className='title'>Settings</div>
       <div className="settings__select-container">
-        <div className="settings__select-label">Camera</div>
-        <select
-          id="camera-select"
-          className="settings__select-button"
-          onChange={e => {
-            const { value } = e.target;
-            const mediaInfo = videoInputs.find(device => device.deviceId === value);
-            if (mediaInfo) liveEvent.selectVideoInput(mediaInfo);
-          }}
-        >
-          {videoInputs.map(info => (
-            <option key={info.deviceId} value={info.deviceId}>{info.label}</option>
-          ))}
-        </select>
-      </div>
-
-      <div className="settings__select-container">
         <div className="settings__select-label">Microphone</div>
         <select
           id="microphone-select"
+          value={currentAudioInput?.deviceId}
           className="settings__select-button"
           onChange={e => {
             const { value } = e.target;
             const mediaInfo = audioInputs.find(device => device.deviceId === value);
             if (mediaInfo) liveEvent.selectAudioInput(mediaInfo);
+            setCurrentAudioInput(mediaInfo);
           }}
         >
           {audioInputs.map(info => (

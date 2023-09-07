@@ -2,7 +2,7 @@
 import React, { ReactElement } from 'react';
 
 import './index.scss';
-import IconUser from '../../assets/svg/icons-user.svg';
+import { ReactComponent as IconUser } from '../../assets/svg/icons-user.svg';
 
 interface Props {
   key: string;

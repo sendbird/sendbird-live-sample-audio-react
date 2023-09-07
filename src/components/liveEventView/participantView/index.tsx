@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { LiveEvent, LiveEventState } from "@sendbird/live";
 
 import './index.scss';
-import IconUser from "../../../assets/svg/icons-user.svg";
+import { ReactComponent as IconUser } from "../../../assets/svg/icons-user.svg";
 import { useToast } from './Toast';
 import RightPanel from "../../RightPanel";
 import useModal from "../../../hooks/useModal";
@@ -36,7 +36,7 @@ export default function ParticipantView(props: ParticipantViewProps) {
     eventEndViewDisplayTime,
   } = props;
 
-  const video = useRef<HTMLVideoElement>(null);
+  const audio = useRef<HTMLAudioElement>(null);
   const [Toast, notify, reset] = useToast();
   const [host, setHost] = useState(liveEvent.host);
   const [title, setTitle] = useState(liveEvent.title);
@@ -62,7 +62,7 @@ export default function ParticipantView(props: ParticipantViewProps) {
   }
 
   const setup = async () => {
-    if (host) liveEvent.setVideoViewForLiveEvent(video.current!, host.hostId);
+    if (host) liveEvent.setVideoViewForLiveEvent(audio.current!, host.hostId);
   };
 
   const _openEndedModal = () => {
@@ -124,11 +124,8 @@ export default function ParticipantView(props: ParticipantViewProps) {
         notify('Host is unmuted');
         setHost(liveEvent.host);
       }),
-      liveEvent.on('participantEntered', (...args) => {
-        setParticipantCount(liveEvent.participantCount);
-      }),
-      liveEvent.on('participantExited', (...args) => {
-        setParticipantCount(liveEvent.participantCount);
+      liveEvent.on('participantCountChanged', (liveEvent, participantCountInfo) => {
+        setParticipantCount(participantCountInfo.participantCount);
       }),
       liveEvent.on('liveEventUpdated', () => {
         setTitle(liveEvent.title);
@@ -157,8 +154,13 @@ export default function ParticipantView(props: ParticipantViewProps) {
     <div className="participant-view">
       <div className="participant-view__main">
         <Toast />
-        <div className="video-wrapper">
-          <video className="participant-view__video" ref={video} playsInline autoPlay controls={isSafari()}/>
+        <div className={`video-wrapper ${liveEvent.state === LiveEventState.ONGOING ? 'video-wrapper-active' : ''}`}>
+          {
+            (liveEvent.coverUrl) ?
+              <img src={coverUrl} alt='cover image' className='participant-view__video__cover-image' /> :
+              <IconUser viewBox='-4 -4 20 20' width={160} height={160} />
+          }
+          <audio className="participant-view__video" ref={audio} playsInline autoPlay controls={isSafari()}/>
         </div>
         <div className="participant-view__info">
           <div className="participant-view__profile">

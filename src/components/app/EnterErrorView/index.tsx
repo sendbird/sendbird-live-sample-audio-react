@@ -1,5 +1,5 @@
 import { LiveEvent, LiveEventState } from "@sendbird/live";
-import CloseIcon from "../../../assets/svg/icons-close.svg";
+import { ReactComponent as CloseIcon } from "../../../assets/svg/icons-close.svg";
 import React, { useContext, useMemo } from "react";
 import { SendbirdLiveContext } from "../../../lib/sendbirdLiveContext";
 

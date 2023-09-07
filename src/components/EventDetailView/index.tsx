@@ -3,15 +3,15 @@ import { LiveEvent } from '@sendbird/live';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
-import CloseIcon from '../../assets/svg/icons-close.svg';
-import RightArrowIcon from '../../assets/svg/icons-chevron-right.svg';
-import ToggleOnIcon from '../../assets/svg/icons-toggleon.svg';
-import ToggleOffIcon from '../../assets/svg/icons-toggleoff.svg';
+import { ReactComponent as CloseIcon } from '../../assets/svg/icons-close.svg';
+import { ReactComponent as RightArrowIcon } from '../../assets/svg/icons-chevron-right.svg';
+import { ReactComponent as ToggleOnIcon } from '../../assets/svg/icons-toggleon.svg';
+import { ReactComponent as ToggleOffIcon } from '../../assets/svg/icons-toggleoff.svg';
 
-import UserIcon from '../../assets/svg/icons-user.svg';
-import OperatorIcon from '../../assets/svg/icons-operator.svg';
-import MemberIcon from '../../assets/svg/icons-members.svg';
-import FreezeIcon from '../../assets/svg/icons-freeze.svg';
+import { ReactComponent as UserIcon } from '../../assets/svg/icons-user.svg';
+import { ReactComponent as OperatorIcon } from '../../assets/svg/icons-operator.svg';
+import { ReactComponent as MemberIcon } from '../../assets/svg/icons-members.svg';
+import { ReactComponent as FreezeIcon } from '../../assets/svg/icons-freeze.svg';
 
 import './index.scss';
 

@@ -1,6 +1,9 @@
 import React, { useContext } from "react";
 import { LiveEvent, LiveEventState } from "@sendbird/live";
-import DefaultThumbnail1 from '../../../assets/svg/img-thumbnail-default-1.svg'
+import { ReactComponent as DefaultThumbnail1 } from '../../../assets/svg/img-thumbnail-default-1.svg'
+
+import '../index.scss';
+import { SendbirdLiveContext } from "../../../lib/sendbirdLiveContext";
 
 interface LiveEventElemProps {
   liveEvent: LiveEvent;
@@ -9,8 +12,6 @@ interface LiveEventElemProps {
   showStatusLabel?: boolean;
 }
 
-import '../index.scss';
-import { SendbirdLiveContext } from "../../../lib/sendbirdLiveContext";
 
 export default function LiveEventElem(props: LiveEventElemProps) {
   const {
@@ -46,7 +47,7 @@ export default function LiveEventElem(props: LiveEventElemProps) {
       </div>
       <div className="detail">
         <div className="title__wrapper">
-          <div className="title">{liveEvent.title ? liveEvent.title : stringSet.CREATE_EVENT_DEFAULT_TITLE}</div>
+          <div className="title">{liveEvent.title ? liveEvent.title : liveEvent.createdBy + stringSet.CREATE_EVENT_DEFAULT_TITLE}</div>
           <div className="participant-count__wrapper">
             {
               (liveEvent.state === LiveEventState.ONGOING)
